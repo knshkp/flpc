@@ -1,0 +1,24 @@
+const express=require("express")
+const product_route=express()
+const multer=require("multer")
+
+const path = require("path");
+const bodyParser=require("body-parser")
+product_route.use(bodyParser.json())
+product_route.use(bodyParser.urlencoded({ extended: true }));
+product_route.use(express.static('public'));
+const product_controller=require('../Controllers/ProductControllers')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../public/storeImages'));
+    },
+    filename: function (req, file, cb) {
+        const name = Date.now() + '-' + file.originalname;
+        cb(null, name);
+    }
+});
+const upload = multer({ storage: storage });
+product_route.post('/add_product', upload.array('productImages', 4), product_controller.addProduct);
+product_route.get('/get_product',product_controller.getProduct)
+product_route.get('/search_product',product_controller.searchProduct)
+module.exports=product_route;
