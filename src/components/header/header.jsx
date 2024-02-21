@@ -29,7 +29,9 @@ const PlusImg = styled('img')({
 });
 
 const SearchIc = styled(ShoppingCartIcon)`
-  margin-left: 190px;
+  position: fixed;
+  top: 10px; /* Adjust the value to position it as needed */
+  right: 10px; /* Adjust the value to position it as needed */
 `;
 
 const Header = () => {
